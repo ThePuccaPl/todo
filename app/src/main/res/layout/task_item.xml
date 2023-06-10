@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:id="@+id/taskLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleY="1.5"
+            android:scaleX="1.5"
+            android:id="@+id/completeButton"
+            android:layout_marginHorizontal="15dp"
+            android:src="@drawable/baseline_unchecked_24"
+            android:backgroundTint="@android:color/transparent"
+            />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/taskBox">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/taskName"
+            android:text="Task name"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/taskDesctiption"
+            android:text="Task description"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dueTime"
+            android:text="01.01.2024 00:00"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/category"
+            android:text=""
+            />
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+    android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center|end">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:scaleY="1.5"
+            android:scaleX="1.5"
+            android:id="@+id/fileButton"
+            android:src="@drawable/baseline_attach_file_24"
+            android:visibility="gone"
+            android:backgroundTint="@android:color/transparent"
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:scaleY="1.5"
+            android:scaleX="1.5"
+            android:id="@+id/editButton"
+            android:src="@drawable/baseline_edit_24"
+
+            android:backgroundTint="@android:color/transparent"
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:scaleY="1.5"
+            android:scaleX="1.5"
+            android:id="@+id/deleteButton"
+            android:src="@drawable/baseline_delete_24"
+
+            android:backgroundTint="@android:color/transparent"
+            />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
