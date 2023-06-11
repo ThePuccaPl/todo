@@ -3,6 +3,7 @@ package com.example.todo
 import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.Intent.createChooser
 import android.net.Uri
@@ -55,6 +56,9 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment(){
         taskViewModel = ViewModelProvider(activity).get(TaskViewModel::class.java)
         binding.saveTaskButton.setOnClickListener {
             saveAction()
+        }
+        binding.cancelTaskButton.setOnClickListener {
+            dismiss()
         }
         binding.setTimeButton.setOnClickListener {
             openTimePicker()
@@ -111,8 +115,7 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment(){
         return binding.root
     }
 
-    private fun saveAction()
-    {
+    private fun saveAction() {
         if(dueDate != null && dueTime!=null){
             dueDateTime = LocalDateTime.of(dueDate!!.year, dueDate!!.month, dueDate!!.dayOfMonth,dueTime!!.hour, dueTime!!.minute)
         }
@@ -147,7 +150,6 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment(){
         }
         val dialog = TimePickerDialog(activity, listener, dueTime!!.hour, dueTime!!.minute, true)
         dialog.show()
-
     }
 
     private fun openDatePicker() {

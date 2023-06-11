@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todo.databinding.ActivityMainBinding
+import com.example.todo.R.string.preference_file_key
 
 
 class MainActivity : AppCompatActivity(), TaskItemClickListener
@@ -22,8 +24,9 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setUpPreferences()
-        val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val sharedPref = getSharedPreferences(getString(preference_file_key), Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
+        binding.searchView.clearFocus()
         binding.newTaskButton.setOnClickListener {
             NewTaskFragment(null).show(supportFragmentManager, "newTaskTag")
         }
@@ -57,12 +60,28 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
             setRecyclerView()
         }
         binding.hideCategoriesButton.setOnClickListener {
-            val categories = sharedPref.getString("categories","")
-            Toast.makeText(this, categories, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "not implemented", Toast.LENGTH_SHORT).show()
+            //val categories = sharedPref.getString("categories","")
+            //Toast.makeText(this, categories, Toast.LENGTH_SHORT).show()
         }
         binding.setTimeOffsetButton.setOnClickListener {
-
+            SetTimeOffsetFragment().show(supportFragmentManager, "offsetTag")
         }
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                editor.putString("search",newText)
+                editor.apply()
+                setRecyclerView()
+                return true
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+        })
+
         setRecyclerView()
     }
 
@@ -78,7 +97,7 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
 
 
     private fun setUpPreferences(){
-        val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val sharedPref = getSharedPreferences(getString(preference_file_key), Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
         if(!sharedPref.contains("hideCompleted")){
             editor.putString("hideCompleted","false")
@@ -91,6 +110,9 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
         }
         if(!sharedPref.contains("sortMode")){
             editor.putString("sortMode","created")
+        }
+        if(!sharedPref.contains("search")){
+            editor.putString("search","")
         }
         editor.apply()
     }

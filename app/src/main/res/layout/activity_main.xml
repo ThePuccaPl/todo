@@ -48,24 +48,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/taskNameInput"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Search"
-                android:inputType="textCapWords"
-                android:paddingStart="8dp"
-                android:paddingEnd="15dp"
-                android:textColorHint="#8D6E63"
-                android:textSize="18sp" />
 
-            <ImageButton
-                android:id="@+id/searchButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/transparent"
-                android:src="@drawable/baseline_search_24" />
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingStart="8dp"
+                android:paddingEnd="15dp" />
+
 
         </LinearLayout>
 
