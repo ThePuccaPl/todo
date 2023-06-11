@@ -3,7 +3,6 @@ package com.example.todo
 import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.content.Intent.createChooser
 import android.net.Uri
@@ -13,8 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.example.todo.databinding.FragmentNewTaskBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

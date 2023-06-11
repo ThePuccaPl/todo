@@ -131,6 +131,10 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
         taskViewModel.deleteTaskItem(taskItem)
     }
 
+    override fun showDetails(taskItem: TaskItem) {
+        DetailsTaskFragment(taskItem).show(supportFragmentManager,"detailsTag")
+    }
+
 }
 
 

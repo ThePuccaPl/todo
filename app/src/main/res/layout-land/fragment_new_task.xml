@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewTaskFragment"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        tools:context=".NewTaskFragment"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="Task name"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/taskNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="textCapWords"
+            android:paddingEnd="8dp"
+            android:textSize="18sp"
+            android:hint="Task name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="Task description"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/taskDescriptionInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:lines="3"
+            android:gravity="start"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:textSize="18sp"
+            android:hint="Task description"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="Category"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/taskCategoryInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="textCapWords"
+            android:paddingEnd="8dp"
+            android:textSize="18sp"
+            android:hint=""/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+    >
+
+        <Button
+            android:id="@+id/addFile"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue"
+            android:text="Attatch file"></Button>
+
+        <Button
+            android:id="@+id/setTimeButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue"
+            android:text="Set Time"></Button>
+
+        <Button
+            android:id="@+id/saveTaskButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue"
+            android:text="Save" />
+
+        <Button
+            android:id="@+id/cancelTaskButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue"
+            android:text="Cancel" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+</LinearLayout>

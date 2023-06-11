@@ -3,10 +3,7 @@ package com.example.todo
 import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.databinding.TaskItemBinding
 import java.io.File
@@ -49,7 +46,7 @@ class TaskItemViewHolder(
             clickListener.completeTaskItem(taskItem)
         }
         binding.taskLayout.setOnClickListener {
-            //display details fragment
+            clickListener.showDetails(taskItem)
         }
         binding.editButton.setOnClickListener {
             clickListener.editTaskItem(taskItem)
