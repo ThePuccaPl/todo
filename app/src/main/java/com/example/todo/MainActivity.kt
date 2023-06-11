@@ -1,6 +1,7 @@
 package com.example.todo
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -14,18 +15,20 @@ import com.example.todo.R.string.preference_file_key
 class MainActivity : AppCompatActivity(), TaskItemClickListener
 {
     private lateinit var binding: ActivityMainBinding
+    var tableSize = false
+
     private val taskViewModel: TaskViewModel by viewModels {
         TaskItemModelFactory((application as TodoApplication).repository)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setUpPreferences()
         val sharedPref = getSharedPreferences(getString(preference_file_key), Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
+        tableSize = resources.getBoolean(R.bool.isTablet)
         binding.searchView.clearFocus()
         binding.newTaskButton.setOnClickListener {
             NewTaskFragment(null).show(supportFragmentManager, "newTaskTag")
@@ -132,7 +135,16 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
     }
 
     override fun showDetails(taskItem: TaskItem) {
-        DetailsTaskFragment(taskItem).show(supportFragmentManager,"detailsTag")
+        if(tableSize && this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            val fragment = DetailsFragment(taskItem)
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.detailsFragment,fragment)
+                commit()
+            }
+        }
+        else{
+            DetailsTaskFragment(taskItem).show(supportFragmentManager,"detailsTag")
+        }
     }
 
 }
