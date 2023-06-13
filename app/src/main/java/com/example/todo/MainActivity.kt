@@ -1,5 +1,7 @@
 package com.example.todo
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
@@ -8,8 +10,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.todo.databinding.ActivityMainBinding
 import com.example.todo.R.string.preference_file_key
+import com.example.todo.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity(), TaskItemClickListener
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        createNotificationChannel()
         setContentView(binding.root)
         setUpPreferences()
         val sharedPref = getSharedPreferences(getString(preference_file_key), Context.MODE_PRIVATE)
@@ -86,6 +89,17 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
         })
 
         setRecyclerView()
+    }
+
+    private fun createNotificationChannel() {
+        val name = "Alarmclock Channel"
+        val description = " Reminder Alarm manager"
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        val notificationChannel = NotificationChannel("111", name, importance)
+        notificationChannel.description = description
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(notificationChannel)
     }
 
     private fun setRecyclerView() {

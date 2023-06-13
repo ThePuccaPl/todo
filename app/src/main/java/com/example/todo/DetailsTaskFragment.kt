@@ -15,7 +15,7 @@ class DetailsTaskFragment(val taskItem: TaskItem): BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val activity = requireActivity()
+        requireActivity()
         binding.taskNameDetails.text = taskItem.name
         binding.taskDescDetails.text = taskItem.desc
         if(taskItem.dueDateTime!=null){

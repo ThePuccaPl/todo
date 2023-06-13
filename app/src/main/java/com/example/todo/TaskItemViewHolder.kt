@@ -56,17 +56,17 @@ class TaskItemViewHolder(
         }
         binding.fileButton.setOnClickListener {
             println(taskItem.file)
-            var fileString = taskItem.file?.substring(7)
-            var file = File(fileString)
+            val fileString = taskItem.file?.substring(7)
+            val file = File(fileString!!)
 
-            val uri = FileProvider.getUriForFile(context!!, "com.example.todo.provider", file)
-            val mime: String = context!!.getContentResolver().getType(uri)!!
+            val uri = FileProvider.getUriForFile(context, "com.example.todo.provider", file)
+            val mime: String = context.contentResolver.getType(uri)!!
 
             val intent = Intent()
             intent.action = Intent.ACTION_VIEW
             intent.setDataAndType(uri, mime)
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            context!!.startActivity(intent)
+            context.startActivity(intent)
         }
     }
 }
