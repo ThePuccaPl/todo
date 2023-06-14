@@ -12,47 +12,49 @@ class TaskItemRepository(private val taskItemDao: TaskItemDao, context: Context)
 
     @WorkerThread
     fun loadTaskList(): Flow<List<TaskItem>>{
-        val sharedPref = context.getSharedPreferences("todo.PREFERENCE_FILE_KEY", Context.MODE_PRIVATE)
-        val sortType = sharedPref.getString("sortMode","")
-        val hideCompleted = sharedPref.getString("hideCompleted","")
-        val category = sharedPref.getString("categories","").toString()
-        if(sortType == "created"){
-            if(category == ""){
-                if(hideCompleted == "true"){
-                    allTaskItems = taskItemDao.incompleteTaskItems()
-                }
-                else {
-                    allTaskItems =  taskItemDao.allTaskItems()
-                }
-            }
-            else{
-                if(hideCompleted == "true"){
-                    allTaskItems = taskItemDao.incompleteTaskItemsCategory(category)
-                }
-                else {
-                    allTaskItems = taskItemDao.allTaskItemsCategory(category)
-                }
-            }
-        }
-        else{
-            if(category == ""){
-                if(hideCompleted == "true"){
-                    allTaskItems = taskItemDao.incompleteTaskItemsSorted()
-                }
-                else {
-                    allTaskItems = taskItemDao.allTaskItemsSorted()
-                }
-            }
-            else{
-                if(hideCompleted == "true"){
-                    allTaskItems = taskItemDao.incompleteTaskItemsCategorySorted(category)
-                }
-                else {
-                    allTaskItems = taskItemDao.allTaskItemsCategorySorted(category)
-                }
-            }
+        allTaskItems =  taskItemDao.allTaskItems()
+        return allTaskItems
+    }
 
-        }
+    @WorkerThread
+    fun loadIncompleteTaskList(): Flow<List<TaskItem>>{
+        allTaskItems =  taskItemDao.incompleteTaskItems()
+        return allTaskItems
+    }
+
+    @WorkerThread
+    fun loadTaskListSorted(): Flow<List<TaskItem>>{
+        allTaskItems =  taskItemDao.allTaskItemsSorted()
+        return allTaskItems
+    }
+
+    @WorkerThread
+    fun loadIncompleteTaskListSorted(): Flow<List<TaskItem>>{
+        allTaskItems =  taskItemDao.incompleteTaskItemsSorted()
+        return allTaskItems
+    }
+
+    @WorkerThread
+    fun loadTaskListCategory(category:String): Flow<List<TaskItem>>{
+        allTaskItems =  taskItemDao.allTaskItemsCategory(category)
+        return allTaskItems
+    }
+
+    @WorkerThread
+    fun loadTaskListCategorySorted(category:String): Flow<List<TaskItem>>{
+        allTaskItems =  taskItemDao.allTaskItemsCategorySorted(category)
+        return allTaskItems
+    }
+
+    @WorkerThread
+    fun loadIncompleteTaskListCategory(category:String): Flow<List<TaskItem>>{
+        allTaskItems =  taskItemDao.incompleteTaskItemsCategory(category)
+        return allTaskItems
+    }
+
+    @WorkerThread
+    fun loadIncompleteTaskListCategorySorted(category:String): Flow<List<TaskItem>>{
+        allTaskItems =  taskItemDao.incompleteTaskItemsCategorySorted(category)
         return allTaskItems
     }
 

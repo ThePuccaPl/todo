@@ -14,13 +14,51 @@ class TaskViewModel(private val repository: TaskItemRepository): ViewModel()
 
     var hideCompleted = false
 
+    var sortType = "created"
+
+    var category = ""
 
     fun addTaskItem(newTask: TaskItem) = viewModelScope.launch {
         repository.insertTaskItem(newTask)
     }
 
     fun reloadItems() = viewModelScope.launch {
-        taskItems = repository.loadTaskList().asLiveData()
+        if(sortType == "created"){
+            if(category == ""){
+                if(hideCompleted == true){
+                    taskItems = repository.loadIncompleteTaskList().asLiveData()
+                }
+                else {
+                    taskItems = repository.loadTaskList().asLiveData()
+                }
+            }
+            else{
+                if(hideCompleted == true){
+                    taskItems = repository.loadIncompleteTaskListCategory(category).asLiveData()
+                }
+                else {
+                    taskItems = repository.loadTaskListCategory(category).asLiveData()
+                }
+            }
+        }
+        else{
+            if(category == ""){
+                if(hideCompleted == true){
+                    taskItems = repository.loadIncompleteTaskListSorted().asLiveData()
+                }
+                else {
+                    taskItems = repository.loadTaskListSorted().asLiveData()
+                }
+            }
+            else{
+                if(hideCompleted == true){
+                    taskItems = repository.loadIncompleteTaskListCategorySorted(category).asLiveData()
+                }
+                else {
+                    taskItems = repository.loadTaskListCategorySorted(category).asLiveData()
+                }
+            }
+        }
     }
 
     fun updateTaskItem(taskItem: TaskItem) = viewModelScope.launch {

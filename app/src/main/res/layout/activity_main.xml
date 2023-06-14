@@ -17,12 +17,12 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingLeft="180dp">
-    <TextView
+    <ImageButton
+        android:id="@+id/reloadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/debugMainText">
-
-    </TextView>
+        android:backgroundTint="@android:color/transparent"
+        android:src="@drawable/baseline_autorenew_24" />
     <ImageButton
         android:id="@+id/sortButton"
         android:layout_width="wrap_content"
