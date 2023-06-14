@@ -17,6 +17,12 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingLeft="180dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/debugMainText">
+
+    </TextView>
     <ImageButton
         android:id="@+id/sortButton"
         android:layout_width="wrap_content"

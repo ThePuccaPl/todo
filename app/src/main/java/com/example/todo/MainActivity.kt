@@ -43,12 +43,14 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
                 editor.apply()
                 taskViewModel.reloadItems()
                 Toast.makeText(this, "sorted by due date", Toast.LENGTH_SHORT).show()
+                binding.sortButton.setImageResource(R.drawable.baseline_sort_24)
             }
             else if(sort == "time due"){
                 editor.putString("sortMode","created")
                 editor.apply()
                 taskViewModel.reloadItems()
                 Toast.makeText(this, "sorted by creation date", Toast.LENGTH_SHORT).show()
+                binding.sortButton.setImageResource(R.drawable.baseline_filter_list_24)
             }
             setRecyclerView()
         }
@@ -59,12 +61,14 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
                 editor.apply()
                 taskViewModel.reloadItems()
                 Toast.makeText(this, "hide completed", Toast.LENGTH_SHORT).show()
+                binding.hideCompletedButton.setImageResource(R.drawable.baseline_unchecked_24)
             }
             else{
                 editor.putString("hideCompleted","false")
                 editor.apply()
                 taskViewModel.reloadItems()
                 Toast.makeText(this, "show completed", Toast.LENGTH_SHORT).show()
+                binding.hideCompletedButton.setImageResource(R.drawable.baseline_hide_completed_24)
             }
             setRecyclerView()
         }
@@ -139,8 +143,7 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
         NewTaskFragment(taskItem).show(supportFragmentManager,"newTaskTag")
     }
 
-    override fun completeTaskItem(taskItem: TaskItem)
-    {
+    override fun completeTaskItem(taskItem: TaskItem) {
         taskViewModel.setCompleted(taskItem)
     }
 
@@ -160,7 +163,6 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
             DetailsTaskFragment(taskItem).show(supportFragmentManager,"detailsTag")
         }
     }
-
 }
 
 

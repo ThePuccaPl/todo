@@ -139,7 +139,8 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         val dueDateTimeString =
             if (dueDateTime == null) null else TaskItem.dateTimeFormatter.format(dueDateTime)
         if (taskItem == null) {
-            val newTask = TaskItem(name!!, desc!!, dueDateTimeString, null, category, selectedFilePath)
+            val newTask =
+                TaskItem(name!!, desc!!, dueDateTimeString, null, category, selectedFilePath)
             taskViewModel.addTaskItem(newTask)
         } else {
             taskItem!!.name = name!!
@@ -151,7 +152,7 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         }
         binding.taskNameInput.setText("")
         binding.taskDescriptionInput.setText("")
-        if(dueDateTime!=null){
+        if (dueDateTime != null) {
             setAlarm1()
         }
         dismiss()
@@ -187,8 +188,11 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
     }
 
     private fun setAlarm1() {
-        val sharedPref = requireContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-        val offset = sharedPref.getInt("notifTimeOffset",0)
+        val sharedPref = requireContext().getSharedPreferences(
+            getString(R.string.preference_file_key),
+            Context.MODE_PRIVATE
+        )
+        val offset = sharedPref.getInt("notifTimeOffset", 0)
         val offsetMilis = TimeUnit.MINUTES.toMillis(offset.toLong())
         val calendar: Calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, dueDateTime!!.hour)
@@ -203,56 +207,20 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         val alarmTimeMilsec = calendar.timeInMillis - offsetMilis
         val intent = Intent(context, Notification::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-        intent.putExtra("task name", name)
+        intent.putExtra(titleExtra, name)
+        intent.putExtra(messageExtra, desc)
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             reqReqCode,
             intent,
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis - offsetMilis,
-            pendingIntent)
+        alarmManager.setExact(
+            AlarmManager.RTC_WAKEUP,
+            alarmTimeMilsec,
+            pendingIntent
+        )
     }
-
-//    private fun createNotificationChannel() {
-//        val name = "Notif channel"
-//        val desc = "channel description"
-//        val importance = NotificationManager.IMPORTANCE_DEFAULT
-//        val channel = NotificationChannel(channelID, name, importance)
-//        channel.description = desc
-//        val notificationManager =
-//            this.context!!.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-//        notificationManager.createNotificationChannel(channel)
-//    }
-
-//    private fun scheduleNotification() {
-//        val sharedPref = context!!.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-//        val intent = Intent(context, Notification::class.java)
-//        val title = binding.taskNameInput.text.toString()
-//        val message = binding.taskDescriptionInput.text.toString()
-//        intent.putExtra(titleExtra, title)
-//        intent.putExtra(messageExtra, message)
-//        val pendingIntent = PendingIntent.getBroadcast(
-//            context,
-//            notificationID,
-//            intent,
-//            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-//        )
-//
-//        val alarmManager = this.context!!.getSystemService(ALARM_SERVICE) as AlarmManager
-//        val calendar = Calendar.getInstance()
-//        calendar.set(
-//            dueDateTime!!.year,
-//            dueDateTime!!.month.value,
-//            dueDateTime!!.dayOfMonth,
-//            dueDateTime!!.hour,
-//            dueDateTime!!.minute
-//        )
-//        val time = calendar.timeInMillis
-//        val offset = TimeUnit.MINUTES.toMillis(sharedPref.getInt("notifTimeOffset",0).toLong())
-//        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent)
-//    }
 
 }
 

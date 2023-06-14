@@ -3,6 +3,7 @@ package com.example.todo
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -18,7 +19,7 @@ class TaskItem(
     @ColumnInfo(name = "file") var file: String?,
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     @ColumnInfo(name = "createdDate") var creationDate: String = LocalDate.now().toString()
-)
+) : Serializable
 {
 
     fun completedDate(): LocalDate? = if (completedDate == null) null else LocalDate.parse(completedDate, dateFormatter)

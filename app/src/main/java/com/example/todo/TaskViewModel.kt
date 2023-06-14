@@ -12,6 +12,9 @@ class TaskViewModel(private val repository: TaskItemRepository): ViewModel()
 {
     var taskItems: LiveData<List<TaskItem>> = repository.loadTaskList().asLiveData()
 
+    var hideCompleted = false
+
+
     fun addTaskItem(newTask: TaskItem) = viewModelScope.launch {
         repository.insertTaskItem(newTask)
     }
@@ -31,11 +34,14 @@ class TaskViewModel(private val repository: TaskItemRepository): ViewModel()
     fun setCompleted(taskItem: TaskItem) = viewModelScope.launch {
         if(!taskItem.isCompleted()){
             taskItem.completedDate = TaskItem.dateFormatter.format(LocalDate.now())
+            repository.updateTaskItem(taskItem)
         }
         else{
             taskItem.completedDate = null
+            repository.updateTaskItem(taskItem)
+            repository.loadTaskList()
+            taskItems = repository.loadTaskList().asLiveData()
         }
-        repository.updateTaskItem(taskItem)
     }
 }
 

@@ -16,12 +16,12 @@ interface TaskItemDao {
 
     @Query("SELECT * FROM (SELECT * FROM todo WHERE dueDateTime IS NOT NULL ORDER BY dueDateTime ASC)\n" +
             "UNION ALL\n" +
-            "SELECT * from (SELECT * FROM todo WHERE dueDateTime IS NULL ORDER BY createdDate ASC)\n")
+            "SELECT * from (SELECT * FROM todo WHERE dueDateTime IS NULL ORDER BY dueDateTime ASC)\n")
     fun allTaskItemsSorted(): Flow<List<TaskItem>>
 
     @Query("SELECT * FROM (SELECT * FROM todo WHERE dueDateTime IS NOT NULL ORDER BY dueDateTime ASC) WHERE completedDate IS NULL\n" +
             "UNION ALL\n" +
-            "SELECT * from (SELECT * FROM todo WHERE dueDateTime IS NULL ORDER BY createdDate ASC) WHERE completedDate IS NULL\n")
+            "SELECT * from (SELECT * FROM todo WHERE dueDateTime IS NULL ORDER BY dueDateTime ASC) WHERE completedDate IS NULL\n")
     fun incompleteTaskItemsSorted(): Flow<List<TaskItem>>
 
     @Query("SELECT * FROM todo WHERE completedDate IS NULL ORDER BY createdDate ASC")
@@ -32,12 +32,12 @@ interface TaskItemDao {
 
     @Query("SELECT * FROM (SELECT * FROM todo WHERE dueDateTime IS NOT NULL ORDER BY dueDateTime ASC) WHERE category = :searchedCategory \n" +
             "UNION ALL\n" +
-            "SELECT * from (SELECT * FROM todo WHERE dueDateTime IS NULL ORDER BY createdDate ASC) WHERE category = :searchedCategory\n")
+            "SELECT * from (SELECT * FROM todo WHERE dueDateTime IS NULL ORDER BY dueDateTime ASC) WHERE category = :searchedCategory\n")
     fun allTaskItemsCategorySorted(searchedCategory :String): Flow<List<TaskItem>>
 
     @Query("SELECT * FROM (SELECT * FROM todo WHERE dueDateTime IS NOT NULL ORDER BY dueDateTime ASC) WHERE completedDate IS NULL AND category = :searchedCategory \n" +
             "UNION ALL\n" +
-            "SELECT * from (SELECT * FROM todo WHERE dueDateTime IS NULL ORDER BY createdDate ASC) WHERE completedDate IS NULL AND category = :searchedCategory\n")
+            "SELECT * from (SELECT * FROM todo WHERE dueDateTime IS NULL ORDER BY dueDateTime ASC) WHERE completedDate IS NULL AND category = :searchedCategory\n")
     fun incompleteTaskItemsCategorySorted(searchedCategory :String): Flow<List<TaskItem>>
 
     @Query("SELECT * FROM todo WHERE completedDate IS NULL AND category = :searchedCategory ORDER BY createdDate ASC")
