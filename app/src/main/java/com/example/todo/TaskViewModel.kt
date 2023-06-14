@@ -22,6 +22,10 @@ class TaskViewModel(private val repository: TaskItemRepository): ViewModel()
         repository.insertTaskItem(newTask)
     }
 
+    fun searchDatabase(searchQuery: String) {
+        taskItems = repository.searchDatabase(searchQuery).asLiveData()
+    }
+
     fun reloadItems() = viewModelScope.launch {
         if(sortType == "created"){
             if(category == ""){

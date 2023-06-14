@@ -14,6 +14,9 @@ interface TaskItemDao {
     @Query("SELECT * FROM todo ORDER BY createdDate ASC")
     fun allTaskItems(): Flow<List<TaskItem>>
 
+    @Query("SELECT * FROM todo WHERE name LIKE '%' || :searchQuery || '%'")
+    fun searchTaskItems(searchQuery: String): Flow<List<TaskItem>>
+
     @Query("SELECT * FROM (SELECT * FROM todo WHERE dueDateTime IS NOT NULL ORDER BY dueDateTime ASC)\n" +
             "UNION ALL\n" +
             "SELECT * from (SELECT * FROM todo WHERE dueDateTime IS NULL ORDER BY dueDateTime ASC)\n")

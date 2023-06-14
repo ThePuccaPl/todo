@@ -80,7 +80,12 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextChange(newText: String): Boolean {
-                taskViewModel.reloadItems()
+                if(newText!=null && newText != ""){
+                    taskViewModel.searchDatabase(newText)
+                }
+                else{
+                    taskViewModel.reloadItems()
+                }
                 setRecyclerView()
                 return true
             }

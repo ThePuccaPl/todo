@@ -11,6 +11,13 @@ class TaskItemRepository(private val taskItemDao: TaskItemDao, context: Context)
     var allTaskItems : Flow<List<TaskItem>> = taskItemDao.allTaskItems()
 
     @WorkerThread
+    fun searchDatabase(searchQuery: String): Flow<List<TaskItem>>{
+        allTaskItems =  taskItemDao.searchTaskItems(searchQuery)
+        return allTaskItems
+    }
+
+
+    @WorkerThread
     fun loadTaskList(): Flow<List<TaskItem>>{
         allTaskItems =  taskItemDao.allTaskItems()
         return allTaskItems
