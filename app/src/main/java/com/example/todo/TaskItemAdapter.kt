@@ -20,25 +20,25 @@ class TaskItemAdapter(
     }
 
     override fun onBindViewHolder(holder: TaskItemViewHolder, position: Int) {
-        val sharedPref = context.getSharedPreferences("todo.PREFERENCE_FILE_KEY", Context.MODE_PRIVATE)
-
-        val hideCompleted = sharedPref.getString("hideCompleted","")
-
-        if(hideCompleted == "true"){
-            holder.itemView.visibility = View.GONE
-        }
-        else{
-            holder.itemView.visibility = View.VISIBLE
-        }
-
-
-        val sortMode = sharedPref.getString("sortMode","")
-        if(sortMode == "created"){
-            taskItems = taskItems.sortedBy { it.creationDate }
-        }
-        else if(sortMode == "time due"){
-            taskItems = taskItems.sortedBy { it.dueDateTime }
-        }
+//        val sharedPref = context.getSharedPreferences("todo.PREFERENCE_FILE_KEY", Context.MODE_PRIVATE)
+//
+//        val hideCompleted = sharedPref.getString("hideCompleted","")
+//
+//        if(hideCompleted == "true"){
+//            holder.itemView.visibility = View.GONE
+//        }
+//        else{
+//            holder.itemView.visibility = View.VISIBLE
+//        }
+//
+//
+//        val sortMode = sharedPref.getString("sortMode","")
+//        if(sortMode == "created"){
+//            taskItems = taskItems.sortedBy { it.creationDate }
+//        }
+//        else if(sortMode == "time due"){
+//            taskItems = taskItems.sortedBy { it.dueDateTime }
+//        }
         holder.bindTaskItem(taskItems[position])
     }
 

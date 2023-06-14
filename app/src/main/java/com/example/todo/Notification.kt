@@ -26,12 +26,11 @@ class Notification() : BroadcastReceiver() {
         )
 
         val taskName = intent.getStringExtra("task name")
-        //val taskText = intent.getStringExtra("task text")
 
         val builder = NotificationCompat.Builder(context, "111")
             .setSmallIcon(R.drawable.baseline_notifications_24)
             .setContentTitle(taskName)
-            .setContentText()
+            .setContentText("text")
             .setAutoCancel(true)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setDefaults(NotificationCompat.DEFAULT_SOUND)

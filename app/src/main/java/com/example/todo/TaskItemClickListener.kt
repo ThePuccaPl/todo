@@ -6,4 +6,5 @@ interface TaskItemClickListener
     fun completeTaskItem(taskItem: TaskItem)
     fun deleteTaskItem(taskItem: TaskItem)
     fun showDetails(taskItem: TaskItem)
+
 }

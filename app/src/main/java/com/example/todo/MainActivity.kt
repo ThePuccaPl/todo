@@ -41,11 +41,13 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
             if(sort == "created"){
                 editor.putString("sortMode","time due")
                 editor.apply()
+                taskViewModel.reloadItems()
                 Toast.makeText(this, "sorted by due date", Toast.LENGTH_SHORT).show()
             }
             else if(sort == "time due"){
                 editor.putString("sortMode","created")
                 editor.apply()
+                taskViewModel.reloadItems()
                 Toast.makeText(this, "sorted by creation date", Toast.LENGTH_SHORT).show()
             }
             setRecyclerView()
@@ -56,11 +58,13 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
             if(hideCompleted == "false"){
                 editor.putString("hideCompleted","true")
                 editor.apply()
+                taskViewModel.reloadItems()
                 Toast.makeText(this, "hide completed", Toast.LENGTH_SHORT).show()
             }
             else{
                 editor.putString("hideCompleted","false")
                 editor.apply()
+                taskViewModel.reloadItems()
                 Toast.makeText(this, "show completed", Toast.LENGTH_SHORT).show()
             }
             setRecyclerView()
