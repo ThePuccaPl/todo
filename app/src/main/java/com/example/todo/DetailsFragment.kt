@@ -13,7 +13,7 @@ class DetailsFragment(taskItem: TaskItem) : Fragment(R.layout.fragment_details2)
 
     private val timeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
 
-    var t = taskItem
+    private var t = taskItem
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -15,7 +15,7 @@ class SetTimeOffsetFragment : BottomSheetDialogFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity()
-        val sharedPref = context!!.getSharedPreferences(getString(preference_file_key), Context.MODE_PRIVATE)
+        val sharedPref = requireContext().getSharedPreferences(getString(preference_file_key), Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
         number = sharedPref.getInt("notifTimeOffset",0)
         binding.numberPicker1.maxValue = 60

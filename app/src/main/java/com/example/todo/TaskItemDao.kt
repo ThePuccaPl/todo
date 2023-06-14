@@ -27,6 +27,22 @@ interface TaskItemDao {
     @Query("SELECT * FROM todo WHERE completedDate IS NULL ORDER BY createdDate ASC")
     fun incompleteTaskItems(): Flow<List<TaskItem>>
 
+    @Query("SELECT * FROM todo WHERE category = :searchedCategory ORDER BY createdDate ASC")
+    fun allTaskItemsCategory(searchedCategory :String): Flow<List<TaskItem>>
+
+    @Query("SELECT * FROM (SELECT * FROM todo WHERE dueDateTime IS NOT NULL ORDER BY dueDateTime ASC) WHERE category = :searchedCategory \n" +
+            "UNION ALL\n" +
+            "SELECT * from (SELECT * FROM todo WHERE dueDateTime IS NULL ORDER BY createdDate ASC) WHERE category = :searchedCategory\n")
+    fun allTaskItemsCategorySorted(searchedCategory :String): Flow<List<TaskItem>>
+
+    @Query("SELECT * FROM (SELECT * FROM todo WHERE dueDateTime IS NOT NULL ORDER BY dueDateTime ASC) WHERE completedDate IS NULL AND category = :searchedCategory \n" +
+            "UNION ALL\n" +
+            "SELECT * from (SELECT * FROM todo WHERE dueDateTime IS NULL ORDER BY createdDate ASC) WHERE completedDate IS NULL AND category = :searchedCategory\n")
+    fun incompleteTaskItemsCategorySorted(searchedCategory :String): Flow<List<TaskItem>>
+
+    @Query("SELECT * FROM todo WHERE completedDate IS NULL AND category = :searchedCategory ORDER BY createdDate ASC")
+    fun incompleteTaskItemsCategory(searchedCategory :String): Flow<List<TaskItem>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTaskItem(taskItem: TaskItem)
 

@@ -26,6 +26,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.Calendar
+import java.util.concurrent.TimeUnit
 
 
 class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
@@ -36,7 +37,6 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
     private var dueDate: LocalDate? = null
     private var selectedFile: Uri? = null
     private var selectedFilePath: String? = null
-    private var taskNameHolder: String? = null
     private var name: String? = null
     private var desc: String? = null
     private var category: String? = null
@@ -56,7 +56,7 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
                 selectedFilePath = taskItem!!.file
             }
         }
-        taskViewModel = ViewModelProvider(activity).get(TaskViewModel::class.java)
+        taskViewModel = ViewModelProvider(activity)[TaskViewModel::class.java]
         binding.saveTaskButton.setOnClickListener {
             saveAction()
         }
@@ -76,7 +76,6 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
             startActivityForResult(createChooser(intent, "Select a file"), 111)
         }
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -188,6 +187,9 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
     }
 
     private fun setAlarm1() {
+        val sharedPref = requireContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val offset = sharedPref.getInt("notifTimeOffset",0)
+        val offsetMilis = TimeUnit.MINUTES.toMillis(offset.toLong())
         val calendar: Calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, dueDateTime!!.hour)
         calendar.set(Calendar.MINUTE, dueDateTime!!.minute)
@@ -198,7 +200,7 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         if (calendar.timeInMillis < System.currentTimeMillis()) {
             calendar.add(Calendar.DAY_OF_YEAR, dueDateTime!!.dayOfYear)
         }
-        val alarmTimeMilsec = calendar.timeInMillis
+        val alarmTimeMilsec = calendar.timeInMillis - offsetMilis
         val intent = Intent(context, Notification::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_MULTIPLE_TASK
         intent.putExtra("task name", name)
@@ -209,7 +211,7 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
             PendingIntent.FLAG_IMMUTABLE
         )
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
+            calendar.timeInMillis - offsetMilis,
             pendingIntent)
     }
 

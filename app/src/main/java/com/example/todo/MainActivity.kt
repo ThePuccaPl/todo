@@ -17,8 +17,8 @@ import com.example.todo.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(), TaskItemClickListener
 {
     private lateinit var binding: ActivityMainBinding
-    var tableSize = false
-
+    private var tableSize = false
+    private var bundle : Bundle = Bundle()
     private val taskViewModel: TaskViewModel by viewModels {
         TaskItemModelFactory((application as TodoApplication).repository)
     }
@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
                 Toast.makeText(this, "sorted by creation date", Toast.LENGTH_SHORT).show()
             }
             setRecyclerView()
-
         }
         binding.hideCompletedButton.setOnClickListener {
             val hideCompleted = sharedPref.getString("hideCompleted","")
@@ -70,9 +69,11 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
             setRecyclerView()
         }
         binding.hideCategoriesButton.setOnClickListener {
-            Toast.makeText(this, "not implemented", Toast.LENGTH_SHORT).show()
-            //val categories = sharedPref.getString("categories","")
-            //Toast.makeText(this, categories, Toast.LENGTH_SHORT).show()
+            val bottomSheetFragment = CategoryInputFragment()
+            bottomSheetFragment.arguments = bundle
+            bottomSheetFragment.show(supportFragmentManager, "categoryTag")
+            taskViewModel.reloadItems()
+            setRecyclerView()
         }
         binding.setTimeOffsetButton.setOnClickListener {
             SetTimeOffsetFragment().show(supportFragmentManager, "offsetTag")
@@ -83,6 +84,7 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
                 editor.putString("search",newText)
                 editor.apply()
                 setRecyclerView()
+                taskViewModel.reloadItems()
                 return true
             }
 
@@ -91,7 +93,6 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
             }
 
         })
-
         setRecyclerView()
     }
 
@@ -115,8 +116,6 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
             }
         }
     }
-
-
     private fun setUpPreferences(){
         val sharedPref = getSharedPreferences(getString(preference_file_key), Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
@@ -131,9 +130,6 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
         }
         if(!sharedPref.contains("sortMode")){
             editor.putString("sortMode","created")
-        }
-        if(!sharedPref.contains("search")){
-            editor.putString("search","")
         }
         editor.apply()
     }

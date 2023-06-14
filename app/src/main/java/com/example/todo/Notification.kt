@@ -11,7 +11,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
-class Notification() : BroadcastReceiver() {
+class Notification : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
         Log.d("this", "notify")
