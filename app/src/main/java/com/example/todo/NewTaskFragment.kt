@@ -130,7 +130,7 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         if (dueDate != null && dueTime != null) {
             dueDateTime = LocalDateTime.of(
                 dueDate!!.year,
-                dueDate!!.month,
+                dueDate!!.month + 1,
                 dueDate!!.dayOfMonth,
                 dueTime!!.hour,
                 dueTime!!.minute
@@ -173,8 +173,9 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
     }
 
     private fun openDatePicker() {
-        if (dueDate == null)
+        if (dueDate == null){
             dueDate = LocalDate.now()
+        }
         val listener =
             DatePickerDialog.OnDateSetListener { _, selectedYear, selectedMonth, selectedDay ->
                 dueDate = LocalDate.of(selectedYear, selectedMonth, selectedDay)
@@ -183,11 +184,10 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
             requireActivity(),
             listener,
             dueDate!!.year,
-            dueDate!!.monthValue,
+            dueDate!!.monthValue-1,
             dueDate!!.dayOfMonth
         )
         dialog.show()
-
     }
 
     private fun setAlarm1() {

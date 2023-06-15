@@ -22,9 +22,9 @@ interface TaskItemDao {
             "SELECT * from (SELECT * FROM todo WHERE dueDateTime IS NULL ORDER BY dueDateTime ASC)\n")
     fun allTaskItemsSorted(): Flow<List<TaskItem>>
 
-    @Query("SELECT * FROM (SELECT * FROM todo WHERE dueDateTime IS NOT NULL ORDER BY dueDateTime ASC) WHERE completedDate IS NULL\n" +
+    @Query("SELECT * FROM (SELECT * FROM todo WHERE completedDate IS NULL ORDER BY dueDateTime ASC) WHERE dueDateTime IS NOT NULL\n" +
             "UNION ALL\n" +
-            "SELECT * from (SELECT * FROM todo WHERE dueDateTime IS NULL ORDER BY dueDateTime ASC) WHERE completedDate IS NULL\n")
+            "SELECT * from (SELECT * FROM todo WHERE completedDate IS NULL ORDER BY dueDateTime ASC) WHERE dueDateTime IS NULL\n")
     fun incompleteTaskItemsSorted(): Flow<List<TaskItem>>
 
     @Query("SELECT * FROM todo WHERE completedDate IS NULL ORDER BY createdDate ASC")

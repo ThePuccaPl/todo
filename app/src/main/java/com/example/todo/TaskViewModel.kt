@@ -80,12 +80,11 @@ class TaskViewModel(private val repository: TaskItemRepository): ViewModel()
             repository.updateTaskItem(taskItem)
             taskItems = repository.loadTaskList().asLiveData()
         }
-//        else{
-//            taskItem.completedDate = null
-//            repository.updateTaskItem(taskItem)
-//            repository.loadTaskList()
-//            taskItems = repository.loadTaskList().asLiveData()
-//        }
+        else{
+            taskItem.completedDate = null
+            repository.updateTaskItem(taskItem)
+            taskItems = repository.loadTaskList().asLiveData()
+        }
     }
 }
 
