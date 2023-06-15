@@ -3,12 +3,15 @@ package com.example.todo
 import android.content.Context
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.sync.Mutex
 
 class TaskItemRepository(private val taskItemDao: TaskItemDao, context: Context) {
 
     private val context = context
 
     var allTaskItems : Flow<List<TaskItem>> = taskItemDao.allTaskItems()
+
+    private var mutex :Mutex = Mutex()
 
     @WorkerThread
     fun searchDatabase(searchQuery: String): Flow<List<TaskItem>>{
@@ -67,16 +70,22 @@ class TaskItemRepository(private val taskItemDao: TaskItemDao, context: Context)
 
     @WorkerThread
     suspend fun insertTaskItem(taskItem : TaskItem){
+        mutex.lock()
         taskItemDao.insertTaskItem(taskItem)
+        mutex.unlock()
     }
 
     @WorkerThread
     suspend fun updateTaskItem(taskItem : TaskItem){
+        mutex.lock()
         taskItemDao.updateTaskItem(taskItem)
+        mutex.unlock()
     }
 
     @WorkerThread
     suspend fun deleteTaskItem(taskItem : TaskItem){
+        mutex.lock()
         taskItemDao.deleteTaskItem(taskItem)
+        mutex.unlock()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.todo
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -18,11 +19,11 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
 {
     private lateinit var binding: ActivityMainBinding
     private var tableSize = false
-    private var bundle : Bundle = Bundle()
     private val taskViewModel: TaskViewModel by viewModels {
         TaskItemModelFactory((application as TodoApplication).repository)
     }
 
+    @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -30,13 +31,13 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
         setContentView(binding.root)
         setUpPreferences()
         val sharedPref = getSharedPreferences(getString(preference_file_key), Context.MODE_PRIVATE)
-        val editor = sharedPref.edit()
+        sharedPref.edit()
         tableSize = resources.getBoolean(R.bool.isTablet)
         binding.searchView.clearFocus()
         binding.newTaskButton.setOnClickListener {
             NewTaskFragment(null).show(supportFragmentManager, "newTaskTag")
         }
-        binding.reloadButton!!.setOnClickListener {
+        binding.reloadButton.setOnClickListener {
             taskViewModel.reloadItems()
             setRecyclerView()
         }
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
             setRecyclerView()
         }
         binding.hideCompletedButton.setOnClickListener {
-            if(taskViewModel.hideCompleted == false){
+            if(!taskViewModel.hideCompleted){
                 taskViewModel.hideCompleted = true
                 binding.hideCompletedButton.setImageResource(R.drawable.baseline_unchecked_24)
                 taskViewModel.reloadItems()
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextChange(newText: String): Boolean {
-                if(newText!=null && newText != ""){
+                if(newText != ""){
                     taskViewModel.searchDatabase(newText)
                 }
                 else{
@@ -114,7 +115,7 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
         taskViewModel.taskItems.observe(this){
             binding.todoListRecyclerView.apply {
                 layoutManager = LinearLayoutManager(applicationContext)
-                adapter = TaskItemAdapter(it, mainActivity, context)
+                adapter = TaskItemAdapter(it, mainActivity)
             }
         }
     }
@@ -154,6 +155,7 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener
 
     override fun onResume() {
         super.onResume()
+        taskViewModel.reloadItems()
         setRecyclerView()
     }
 }

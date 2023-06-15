@@ -9,17 +9,15 @@ import com.example.todo.databinding.FragmentCategoryInputBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class CategoryInputFragment(viewModel: TaskViewModel) : BottomSheetDialogFragment() {
+class CategoryInputFragment(private var viewModel: TaskViewModel) : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentCategoryInputBinding
-
-    private var viewModel = viewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity()
         val editable = Editable.Factory.getInstance()
-        binding.categoryInput.text = editable.newEditable(viewModel.category.toString())
+        binding.categoryInput.text = editable.newEditable(viewModel.category)
         binding.cancelCategorySearchButton.setOnClickListener {
             dismiss()
         }

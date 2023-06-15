@@ -16,7 +16,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingLeft="180dp">
+    android:layout_gravity="end">
     <ImageButton
         android:id="@+id/reloadButton"
         android:layout_width="wrap_content"

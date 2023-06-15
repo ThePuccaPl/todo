@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.todo
 
 import android.app.Activity.RESULT_OK
@@ -77,6 +79,7 @@ class NewTaskFragment(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

@@ -18,6 +18,7 @@ class TaskViewModel(private val repository: TaskItemRepository): ViewModel()
 
     var category = ""
 
+
     fun addTaskItem(newTask: TaskItem) = viewModelScope.launch {
         repository.insertTaskItem(newTask)
     }
@@ -29,7 +30,7 @@ class TaskViewModel(private val repository: TaskItemRepository): ViewModel()
     fun reloadItems() = viewModelScope.launch {
         if(sortType == "created"){
             if(category == ""){
-                if(hideCompleted == true){
+                if(hideCompleted){
                     taskItems = repository.loadIncompleteTaskList().asLiveData()
                 }
                 else {
@@ -37,7 +38,7 @@ class TaskViewModel(private val repository: TaskItemRepository): ViewModel()
                 }
             }
             else{
-                if(hideCompleted == true){
+                if(hideCompleted){
                     taskItems = repository.loadIncompleteTaskListCategory(category).asLiveData()
                 }
                 else {
@@ -47,7 +48,7 @@ class TaskViewModel(private val repository: TaskItemRepository): ViewModel()
         }
         else{
             if(category == ""){
-                if(hideCompleted == true){
+                if(hideCompleted){
                     taskItems = repository.loadIncompleteTaskListSorted().asLiveData()
                 }
                 else {
@@ -55,7 +56,7 @@ class TaskViewModel(private val repository: TaskItemRepository): ViewModel()
                 }
             }
             else{
-                if(hideCompleted == true){
+                if(hideCompleted){
                     taskItems = repository.loadIncompleteTaskListCategorySorted(category).asLiveData()
                 }
                 else {
@@ -77,13 +78,14 @@ class TaskViewModel(private val repository: TaskItemRepository): ViewModel()
         if(!taskItem.isCompleted()){
             taskItem.completedDate = TaskItem.dateFormatter.format(LocalDate.now())
             repository.updateTaskItem(taskItem)
-        }
-        else{
-            taskItem.completedDate = null
-            repository.updateTaskItem(taskItem)
-            repository.loadTaskList()
             taskItems = repository.loadTaskList().asLiveData()
         }
+//        else{
+//            taskItem.completedDate = null
+//            repository.updateTaskItem(taskItem)
+//            repository.loadTaskList()
+//            taskItems = repository.loadTaskList().asLiveData()
+//        }
     }
 }
 

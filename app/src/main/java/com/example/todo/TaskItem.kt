@@ -24,7 +24,7 @@ class TaskItem(
 
     fun completedDate(): LocalDate? = if (completedDate == null) null else LocalDate.parse(completedDate, dateFormatter)
 
-    fun createdDate(): LocalDate? = if (creationDate == null) null else LocalDate.parse(creationDate, dateFormatter)
+    fun createdDate(): LocalDate? = LocalDate.parse(creationDate, dateFormatter)
 
     fun dueDateTime(): LocalDateTime? = if (dueDateTime == null) null else LocalDateTime.parse(dueDateTime, dateTimeFormatter)
 
